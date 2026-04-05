@@ -20,7 +20,8 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'main.login'
     
-    from routes import main, api
+    from routes.main import main
+    from routes.api import api
     app.register_blueprint(main)
     app.register_blueprint(api)
     
