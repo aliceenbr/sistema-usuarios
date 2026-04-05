@@ -30,11 +30,15 @@
     <div class="welcome-card mb-4">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="welcome-title">
-                    <i class="bi bi-mortarboard-fill me-2"></i>
-                    Bem-vindo, {{ current_user.nome.split()[0] }}!
-                </h1>
-                <p class="welcome-subtitle mb-0">Gerencie seus usuários de forma simples e segura</p>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="https://i.gifer.com/4Mj.gif" alt="Hello Kitty" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
+                    <div>
+                        <h1 class="welcome-title mb-1">
+                            Bem-vindo, {{ current_user.nome.split()[0] }}!
+                        </h1>
+                        <p class="welcome-subtitle mb-0">Seus dados estão protegidos e seguros <i class="bi bi-shield-check text-success"></i></p>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 text-end">
                 <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#modalCadastrar">
