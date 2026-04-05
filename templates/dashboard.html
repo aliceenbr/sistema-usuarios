@@ -10,15 +10,6 @@
             <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
                 <i class="bi bi-moon-fill" id="themeIcon"></i>
             </button>
-            <a href="{{ url_for('main.lista_usuarios') }}" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-people me-1"></i>Lista
-            </a>
-            <a href="{{ url_for('main.buscar') }}" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-search me-1"></i>Buscar
-            </a>
-            <span class="text-dark fw-medium">
-                <i class="bi bi-person-circle me-1"></i>{{ current_user.nome }}
-            </span>
             <a href="{{ url_for('main.logout') }}" class="btn btn-sm btn-outline-danger">
                 <i class="bi bi-box-arrow-right me-1"></i>Sair
             </a>
@@ -26,147 +17,18 @@
     </div>
 </nav>
 
-<div class="container py-5">
-    <div class="welcome-card mb-4">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <div class="d-flex align-items-center gap-3">
-                    <img src="https://i.gifer.com/4Mj.gif" alt="Hello Kitty" style="width:70px;height:70px;border-radius:50%;object-fit:cover;">
-                    <div>
-                        <h1 class="welcome-title mb-1">
-                            Bem-vindo, {{ current_user.nome.split()[0] }}!
-                        </h1>
-                        <p class="welcome-subtitle mb-0">Seus dados estão protegidos e seguros <i class="bi bi-shield-check text-success"></i></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-end">
-                <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#modalCadastrar">
-                    <i class="bi bi-person-plus-fill me-2"></i>Novo Usuário
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-4 g-4">
-        <div class="col-md-4">
-            <div class="stats-card">
-                <div class="stats-icon">
-                    <i class="bi bi-people-fill"></i>
-                </div>
-                <h5>Total de Usuários</h5>
-                <h2>{{ stats.total }}</h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stats-card success">
-                <div class="stats-icon">
-                    <i class="bi bi-calendar-check"></i>
-                </div>
-                <h5>Cadastrados Hoje</h5>
-                <h2>{{ stats.hoje }}</h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="stats-card warning">
-                <div class="stats-icon">
-                    <i class="bi bi-graph-up"></i>
-                </div>
-                <h5>API Disponível</h5>
-                <h2><i class="bi bi-check-circle"></i></h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <span><i class="bi bi-clock-history me-2"></i>Cadastros Recentes</span>
-            <a href="{{ url_for('main.lista_usuarios') }}" class="btn btn-sm btn-light float-end">
-                Ver todos <i class="bi bi-arrow-right ms-1"></i>
-            </a>
-        </div>
-        <div class="card-body">
-            {% if usuarios %}
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Usuário</th>
-                            <th>Email</th>
-                            <th>Data</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for u in usuarios %}
-                        <tr>
-                            <td>
-                                <a href="{{ url_for('main.perfil', id=u.id) }}" class="text-decoration-none">
-                                    <strong>{{ u.nome }}</strong>
-                                </a>
-                            </td>
-                            <td>{{ u.email }}</td>
-                            <td>{{ u.data_cadastro.strftime('%d/%m/%Y') if u.data_cadastro else '-' }}</td>
-                            <td>
-                                <a href="{{ url_for('main.perfil', id=u.id) }}" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a href="{{ url_for('main.editar', id=u.id) }}" class="btn btn-sm btn-warning">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="text-center py-5">
-                <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
-                <h4 class="text-muted mt-3">Nenhum usuário cadastrado</h4>
-                <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modalCadastrar">
-                    <i class="bi bi-person-plus-fill me-2"></i>Primeiro Cadastro
-                </button>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card api-card">
-                <div class="card-header">
-                    <span><i class="bi bi-cloud me-2"></i>API REST</span>
-                </div>
-                <div class="card-body">
-                    <p class="mb-3">Acesse os dados via API:</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="api-endpoint">
-                                <code>GET /api/usuarios</code>
-                                <small>Lista todos os usuários</small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="api-endpoint">
-                                <code>GET /api/usuarios/&lt;id&gt;</code>
-                                <small>Busca usuário por ID</small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="api-endpoint">
-                                <code>POST /api/usuarios</code>
-                                <small>Cria novo usuário</small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="api-endpoint">
-                                <code>DELETE /api/usuarios/&lt;id&gt;</code>
-                                <small>Remove usuário</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="container py-5 text-center">
+    <div class="welcome-card mx-auto" style="max-width: 600px;">
+        <div class="d-flex flex-column align-items-center gap-3">
+            <img src="https://i.gifer.com/4Mj.gif" alt="Hello Kitty" style="width:100px;height:100px;border-radius:50%;object-fit:cover;">
+            <div>
+                <h1 class="welcome-title mb-2">
+                    Bem-vindo, {{ current_user.nome.split()[0] }}!
+                </h1>
+                <p class="welcome-subtitle mb-0">
+                    <i class="bi bi-shield-check text-success me-1"></i>
+                    Seus dados estão protegidos e utilizados apenas para fins de autenticação neste sistema. Não compartilhamos suas informações com terceiros. Este projeto é apenas demonstrativo para fins de portfólio.
+                </p>
             </div>
         </div>
     </div>
@@ -175,51 +37,4 @@
 <footer class="footer">
     <p>Sistema de Cadastro Seguro <i class="bi bi-heart-fill text-danger"></i></p>
 </footer>
-
-<div class="modal fade" id="modalCadastrar" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i>Novo Usuário</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form method="POST" action="{{ url_for('main.cadastrar_usuario') }}" onsubmit="return validarFormulario(event, 'cadastro')">
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label class="form-label"><i class="bi bi-person-fill me-2"></i>Nome Completo</label>
-                        <input type="text" name="nome" class="form-control" placeholder="Nome completo" required minlength="2">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label"><i class="bi bi-envelope-fill me-2"></i>Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="email@exemplo.com" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label"><i class="bi bi-lock-fill me-2"></i>Senha</label>
-                        <div class="input-group">
-                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" required>
-                            <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
-                                <i class="bi bi-eye" id="iconeSenha"></i>
-                            </button>
-                        </div>
-                        <div class="progress mt-2" style="height: 6px;">
-                            <div id="forcaSenha" class="progress-bar bg-secondary" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle-fill me-2"></i>Cadastrar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-document.getElementById('senha')?.addEventListener('input', function() {
-    mostrarForcaSenha(this.value);
-});
-</script>
 {% endblock %}

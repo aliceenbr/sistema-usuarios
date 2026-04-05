@@ -29,7 +29,6 @@ def create_app():
     logger.info('Inicializando aplicacao...')
     
     with app.app_context():
-        db.drop_all()
         db.create_all()
         
         uploads_path = os.path.join(app.root_path, 'static', 'uploads')
