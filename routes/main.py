@@ -1,9 +1,11 @@
-from flask import render_template, request, redirect, url_for, flash, current_app, send_from_directory
+from flask import render_template, request, redirect, url_for, flash, current_app, send_from_directory, Blueprint
 from flask_login import login_required, current_user
 from models import Usuario, db
 import os
 from datetime import datetime
 import logging
+
+main = Blueprint('main', __name__)
 
 logger = logging.getLogger(__name__)
 

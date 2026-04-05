@@ -22,6 +22,7 @@ def create_app():
     
     from routes.main import main
     from routes.api import api
+    
     app.register_blueprint(main)
     app.register_blueprint(api)
     

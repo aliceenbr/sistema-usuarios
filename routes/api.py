@@ -1,6 +1,8 @@
-from flask import jsonify, request
+from flask import jsonify, request, Blueprint
 from flask_login import login_required, current_user
 from models import Usuario
+
+api = Blueprint('api', __name__, url_prefix='/api')
 
 @api.route('/usuarios', methods=['GET'])
 @login_required
