@@ -85,17 +85,7 @@ def registrar():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    total_usuarios = Usuario.query.count()
-    usuarios = Usuario.query.order_by(Usuario.data_cadastro.desc()).limit(6).all()
-    
-    stats = {
-        'total': total_usuarios,
-        'hoje': Usuario.query.filter(
-            db.func.date(Usuario.data_cadastro) == datetime.now().date()
-        ).count()
-    }
-    
-    return render_template('dashboard.html', usuarios=usuarios, total=total_usuarios, stats=stats)
+    return render_template('dashboard.html')
 
 @main.route('/usuarios/lista')
 @login_required
