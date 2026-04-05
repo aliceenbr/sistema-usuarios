@@ -20,20 +20,21 @@
 
 <div class="container py-5 text-center">
     <div class="welcome-card mx-auto" style="max-width: 650px; animation-delay: 0.1s;">
-        <h1 class="welcome-title mb-2" style="animation: fadeIn 0.8s ease 0.2s backwards;">
-            Bem-vindo, {{ current_user.nome.split()[0] }}!
+        <img src="https://i.gifer.com/4Mj.gif" alt="Hello Kitty" style="width:100px;height:100px;border-radius:50%;object-fit:cover; margin-bottom: 20px; animation: fadeIn 0.8s ease 0.2s backwards;">
+        <h1 class="welcome-title mb-3" style="animation: fadeIn 0.8s ease 0.3s backwards;">
+            Bem-vindo(a), {{ current_user.nome.split()[0] }}!
         </h1>
-        <p class="welcome-subtitle mb-4" style="animation: fadeIn 0.8s ease 0.4s backwards;">
+        <p class="welcome-subtitle mb-2" style="animation: fadeIn 0.8s ease 0.4s backwards;">
             <i class="bi bi-shield-check me-1"></i>
-            Seus dados estão protegidos e seguros
+            Seus dados estão protegidos e utilizados apenas para fins de autenticação neste sistema.
         </p>
-        <img src="https://i.gifer.com/4Mj.gif" alt="Hello Kitty" style="width:100px;height:100px;border-radius:50%;object-fit:cover; margin: 20px 0; animation: fadeIn 0.8s ease 0.3s backwards;">
-        <p id="data-hora" class="welcome-subtitle mb-4" style="animation: fadeIn 0.8s ease 0.5s backwards;"></p>
-        <div class="mt-4" style="animation: fadeIn 0.8s ease 0.6s backwards;">
-            <a href="{{ url_for('main.lista_usuarios') }}" class="btn btn-success btn-lg px-5 py-3" style="animation: pulse 2s infinite;">
-                <i class="bi bi-people me-2"></i>Ver Usuários
-            </a>
-        </div>
+        <p class="welcome-subtitle mb-2" style="animation: fadeIn 0.8s ease 0.5s backwards;">
+            Não compartilhamos suas informações com terceiros.
+        </p>
+        <p class="welcome-subtitle mb-0" style="opacity: 0.6; animation: fadeIn 0.8s ease 0.6s backwards;">
+            Este projeto é apenas demonstrativo para fins de portfólio.
+        </p>
+        <p id="data-hora" class="welcome-subtitle mt-4" style="animation: fadeIn 0.8s ease 0.7s backwards;"></p>
     </div>
 </div>
 
