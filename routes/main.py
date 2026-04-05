@@ -1,7 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, current_app, send_from_directory
 from flask_login import login_required, current_user
 from models import Usuario, db
-from routes import main
 import os
 from datetime import datetime
 import logging

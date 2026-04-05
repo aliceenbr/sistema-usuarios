@@ -1,7 +1,6 @@
 from flask import jsonify, request
 from flask_login import login_required, current_user
 from models import Usuario
-from routes import api
 
 @api.route('/usuarios', methods=['GET'])
 @login_required
