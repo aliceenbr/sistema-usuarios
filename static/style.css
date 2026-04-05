@@ -9,9 +9,9 @@
     --gray: #636e72;
     --light: #f8f9fa;
     --white: #ffffff;
-    --gradient: linear-gradient(135deg, #a8b2d1 0%, #c4b5dd 50%, #d4a5a5 100%);
-    --shadow: 0 10px 40px rgba(0,0,0,0.1);
-    --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --shadow: 0 10px 40px rgba(0,0,0,0.15);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
     --radius: 16px;
     --radius-lg: 24px;
 }
@@ -442,23 +442,26 @@ body {
     border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     animation: slideUp 0.6s ease;
+    transition: all 0.4s ease;
 }
 
 .welcome-card:hover {
     background: rgba(255,255,255,0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.15);
 }
 
 .welcome-title {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 800;
     margin-bottom: 8px;
     opacity: 0.95;
 }
 
 .welcome-subtitle {
-    opacity: 0.8;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    opacity: 0.6;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
 .stats-card {
@@ -991,7 +994,7 @@ body {
 }
 
 [data-theme="dark"] body {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 [data-theme="dark"] .welcome-card {
@@ -1006,15 +1009,16 @@ body {
 [data-theme="dark"] .theme-toggle {
     background: rgba(255,255,255,0.1);
     border-color: rgba(255,255,255,0.2);
-    color: #a0a0a0;
+    color: white;
 }
 
 [data-theme="dark"] .theme-toggle:hover {
     background: rgba(255,255,255,0.15);
 }
 
-[data-theme="dark"] .btn-light {
-    background: rgba(255,255,255,0.9);
+[data-theme="dark"] .btn-light,
+[data-theme="dark"] .btn-success {
+    background: white;
 }
 
 [data-theme="dark"] .navbar {
@@ -1027,7 +1031,7 @@ body {
 
 [data-theme="dark"] .btn-outline-danger {
     border-color: rgba(231, 76, 60, 0.7);
-    color: #e74c3c;
+    color: white;
 }
 
 [data-theme="dark"] .btn-outline-danger:hover {
