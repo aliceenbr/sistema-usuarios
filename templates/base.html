@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Cadastro{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="loading" style="display:none;">
+        <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Carregando...</p>
+        </div>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container mt-3">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'erro' else 'success' if category == 'sucesso' else 'info' }} alert-dismissible fade show" role="alert">
+                {% if category == 'sucesso' %}<i class="bi bi-check-circle-fill me-2"></i>{% elif category == 'erro' %}<i class="bi bi-exclamation-triangle-fill me-2"></i>{% else %}<i class="bi bi-info-circle-fill me-2"></i>{% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    
+    {% block content %}{% endblock %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    document.getElementById('loading').style.display = 'flex';
+                });
+            });
+        });
+        
+        function toggleSenha() {
+            var input = document.getElementById('senha');
+            var icon = document.getElementById('iconeSenha');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        }
+        
+        function validarFormulario(event, tipo) {
+            var valido = true;
+            var senha = document.getElementById('senha');
+            
+            if (senha && senha.value && tipo !== 'login') {
+                var erros = validarSenha(senha.value);
+                if (erros.length > 0) {
+                    event.preventDefault();
+                    alert('Verifique os requisitos da senha:\n\n• ' + erros.join('\n• '));
+                    valido = false;
+                }
+            }
+            
+            return valido;
+        }
+        
+        function validarSenha(senha) {
+            var erros = [];
+            if (senha.length < 6) erros.push('Minimo 6 caracteres');
+            if (!/\d/.test(senha)) erros.push('Pelo menos 1 numero');
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) erros.push('Pelo menos 1 caractere especial (!@#$...)');
+            return erros;
+        }
+        
+        function mostrarForcaSenha(senha) {
+            var forca = 0;
+            var texto = '';
+            var cor = 'secondary';
+            
+            if (senha.length >= 6) forca += 33;
+            if (/\d/.test(senha)) forca += 33;
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) forca += 34;
+            
+            if (senha.length === 0) {
+                texto = 'Digite';
+                cor = 'secondary';
+                forca = 0;
+            } else if (forca <= 33) {
+                texto = 'Fraca';
+                cor = 'danger';
+            } else if (forca <= 66) {
+                texto = 'Media';
+                cor = 'warning';
+            } else {
+                texto = 'Forte';
+                cor = 'success';
+            }
+            
+            var barra = document.getElementById('forcaSenha');
+            var textoEl = document.getElementById('textoForca');
+            if (barra) {
+                barra.style.width = forca + '%';
+                barra.className = 'progress-bar bg-' + cor;
+            }
+            if (textoEl) {
+                textoEl.textContent = texto;
+                textoEl.className = 'badge bg-' + cor;
+            }
+        }
+        
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewFoto').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

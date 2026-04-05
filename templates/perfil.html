@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Perfil - Sistema de Cadastro{% endblock %}
+{% block content %}
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.dashboard') }}">
+            <i class="bi bi-shield-lock-fill"></i>Sistema de Cadastro
+        </a>
+        <div class="d-flex align-items-center gap-3">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-house-fill me-1"></i>Dashboard
+            </a>
+            <a href="{{ url_for('main.lista_usuarios') }}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-list me-1"></i>Lista
+            </a>
+            <span class="text-dark fw-medium">
+                <i class="bi bi-person-circle me-1"></i>{{ current_user.nome }}
+            </span>
+            <a href="{{ url_for('main.logout') }}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-box-arrow-right me-1"></i>Sair
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card profile-card">
+                <div class="card-header text-center py-4">
+                    <h4 class="mb-0"><i class="bi bi-person-circle me-2"></i>Perfil do Usuário</h4>
+                </div>
+                <div class="card-body text-center py-5">
+                    <div class="profile-photo mb-4">
+                        {% if usuario_perfil.foto %}
+                        <img src="{{ url_for('static', filename='uploads/' + usuario_perfil.foto) }}" alt="Foto de perfil" class="profile-img" id="previewFoto">
+                        {% else %}
+                        <div class="profile-placeholder" id="previewFoto">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <h3 class="profile-name">{{ usuario_perfil.nome }}</h3>
+                    <p class="profile-email">{{ usuario_perfil.email }}</p>
+                    
+                    <div class="profile-meta">
+                        <span class="badge bg-primary me-2">#{{ usuario_perfil.id }}</span>
+                        <span class="badge bg-secondary">
+                            <i class="bi bi-calendar3 me-1"></i>
+                            {{ usuario_perfil.data_cadastro.strftime('%d/%m/%Y') if usuario_perfil.data_cadastro else '-' }}
+                        </span>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="profile-actions">
+                        <a href="{{ url_for('main.editar', id=usuario_perfil.id) }}" class="btn btn-warning btn-lg me-2">
+                            <i class="bi bi-pencil-square me-2"></i>Editar Perfil
+                        </a>
+                        {% if usuario_perfil.id != current_user.id %}
+                        <form method="POST" action="{{ url_for('main.deletar', id=usuario_perfil.id) }}" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir {{ usuario_perfil.nome }}? Esta ação não pode ser desfeita.')">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash-fill me-2"></i>Excluir
+                            </button>
+                        </form>
+                        {% else %}
+                        <button class="btn btn-secondary btn-lg" disabled>
+                            <i class="bi bi-lock-fill me-2"></i>Seu Perfil
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            {% if usuario_perfil.id == current_user.id %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <span><i class="bi bi-camera me-2"></i>Alterar Foto de Perfil</span>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('main.upload_foto', id=usuario_perfil.id) }}" enctype="multipart/form-data">
+                        <div class="text-center mb-3">
+                            {% if usuario_perfil.foto %}
+                            <img src="{{ url_for('static', filename='uploads/' + usuario_perfil.foto) }}" alt="Foto atual" class="img-thumbnail" style="max-width: 150px;">
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Selecione uma imagem</label>
+                            <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(this)">
+                            <small class="text-muted">Formatos: JPG, PNG, GIF (max 16MB)</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-upload me-2"></i>Atualizar Foto
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>Sistema de Cadastro Seguro <i class="bi bi-heart-fill text-danger"></i></p>
+</footer>
+{% endblock %}
