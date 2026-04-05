@@ -31,6 +31,13 @@ def create_app():
     with app.app_context():
         db.create_all()
         
+        try:
+            db.session.execute(db.text('ALTER TABLE usuarios ADD COLUMN foto VARCHAR(255)'))
+            db.session.commit()
+            logger.info('Coluna foto adicionada')
+        except:
+            pass
+        
         uploads_path = os.path.join(app.root_path, 'static', 'uploads')
         if not os.path.exists(uploads_path):
             os.makedirs(uploads_path)
