@@ -16,6 +16,15 @@
     --radius-lg: 24px;
 }
 
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-card: #0f3460;
+    --text-primary: #eaeaea;
+    --text-secondary: #a0a0a0;
+    --border-color: #2a2a4a;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -853,4 +862,118 @@ body {
     .table tbody tr:hover {
         transform: none;
     }
+}
+
+[data-theme="dark"] body {
+    background: #1a1a2e;
+}
+
+[data-theme="dark"] .login-box,
+[data-theme="dark"] .card {
+    background: #16213e;
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .login-title,
+[data-theme="dark"] .form-label,
+[data-theme="dark"] .user-name {
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .login-subtitle,
+[data-theme="dark"] .user-email,
+[data-theme="dark"] .user-date {
+    color: #a0a0a0;
+}
+
+[data-theme="dark"] .form-control {
+    background: #0f3460;
+    border-color: #2a2a4a;
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .form-control:focus {
+    background: #0f3460;
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .table {
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .table thead th {
+    background: #0f3460;
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .table tbody tr:hover {
+    background: rgba(108, 92, 231, 0.1);
+}
+
+[data-theme="dark"] .user-card {
+    background: #16213e;
+    border-left-color: var(--primary);
+}
+
+[data-theme="dark"] .user-card:hover {
+    border-left-color: var(--success);
+}
+
+[data-theme="dark"] .requisitos-senha {
+    background: #0f3460;
+    border-color: #2a2a4a;
+}
+
+[data-theme="dark"] .req-item {
+    color: #a0a0a0;
+}
+
+[data-theme="dark"] .login-footer,
+[data-theme="dark"] .modal-footer {
+    border-color: #2a2a4a;
+}
+
+[data-theme="dark"] .input-group .btn {
+    background: #0f3460;
+    border-color: #2a2a4a;
+}
+
+[data-theme="dark"] .input-group .form-control {
+    border-color: #2a2a4a;
+}
+
+[data-theme="dark"] .nav-link {
+    color: #eaeaea !important;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: #16213e;
+    border-color: #2a2a4a;
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: #eaeaea;
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background: #0f3460;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    color: white;
 }

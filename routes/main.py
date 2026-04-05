@@ -4,6 +4,9 @@ from models import Usuario, db
 from routes import main
 import os
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 @main.route('/')
 def index():
@@ -29,9 +32,11 @@ def login():
         if usuario and usuario.check_senha(senha):
             from flask_login import login_user
             login_user(usuario)
+            logger.info(f'Login realizado: {email}')
             next_page = request.args.get('next')
             return redirect(next_page or url_for('main.dashboard'))
         
+        logger.warning(f'Tentativa de login falhou: {email}')
         flash('Email ou senha incorretos!', 'erro')
     
     return render_template('login.html')
@@ -70,6 +75,7 @@ def registrar():
         db.session.add(novo_usuario)
         db.session.commit()
         
+        logger.info(f'Novo usuario registrado: {email}')
         flash('Conta criada com sucesso! Faça login.', 'sucesso')
         return redirect(url_for('main.login'))
     
@@ -251,6 +257,7 @@ def deletar(id):
     
     db.session.delete(usuario)
     db.session.commit()
+    logger.info(f'Usuario deletado: {usuario.email} por {current_user.email}')
     flash('Usuário excluído com sucesso!', 'sucesso')
     return redirect(url_for('main.lista_usuarios'))
 
@@ -258,6 +265,7 @@ def deletar(id):
 @login_required
 def logout():
     from flask_login import logout_user
+    logger.info(f'Logout: {current_user.email}')
     logout_user()
     flash('Você saiu do sistema.', 'info')
     return redirect(url_for('main.login'))
